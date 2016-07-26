@@ -12,7 +12,7 @@ class Servicios extends Service
 	{
 		// get list of services
 		$connection = new Connection();
-		$result = $connection->deepQuery("SELECT name, description, category FROM service WHERE listed=1");
+		$result = $connection->deepQuery("SELECT name, description, category, ((select count(*) as total FROM utilization WHERE requestor = '{$request->email}' and utilization.service = service.name) < 1) as isnew FROM service WHERE listed=1");
 
 		$services = array();
 		$others = array(); // to keep the categoty "others" at the end
@@ -50,4 +50,5 @@ class Servicios extends Service
 		// return
 		return $response;
 	}
+	
 }

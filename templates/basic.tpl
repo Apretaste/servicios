@@ -4,7 +4,7 @@
 
 {foreach from=$services key=key item=item}
 	<h2>{$key|capitalize}</h2>
-	<table cellspacing="0" cellpadding="10" border="0">
+	<table cellspacing="0" cellpadding="10" border="0" width="100%">
 	{foreach from=$item item=service}
 		<tr {if $service@iteration is odd}style="background-color:#F2F2F2;"{/if}>
 			<td width="120">
@@ -12,6 +12,11 @@
 			</td>
 			<td>
 				{$service->description}
+			</td>
+			<td width="100">
+			{if $service->isnew == '1'}
+				{button color="red" href="{$service->name}" caption="NUEVO" size="small"}
+			{/if}
 			</td>
 		</tr>
 	{/foreach}
