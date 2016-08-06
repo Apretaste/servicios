@@ -14,7 +14,7 @@
 				{$service->description}
 			</td>
 			<td width="100">
-			{if $service->isnew == '1'}
+			{if $service->isnew == '1' && $service->name !== 'excluyeme'}
 				{button color="red" href="{$service->name}" caption="NUEVO" size="small"}
 			{/if}
 			</td>
