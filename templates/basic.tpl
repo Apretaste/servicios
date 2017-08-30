@@ -8,7 +8,7 @@
 	{foreach from=$item item=service}
 		<tr {if $service@iteration is odd}style="background-color:#F2F2F2;"{/if}>
 			<td width="120">
-				{link href="AYUDA {$service->name}" caption="{$service->name}"}
+				{link href="{$service->name}" caption="{$service->name}"}
 			</td>
 			<td>
 				{$service->description}
