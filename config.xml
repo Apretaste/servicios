@@ -5,8 +5,8 @@
 		<alias>serbicios</alias>
 		<alias>cervicios</alias>
 	</serviceAliases>
-	<serviceDescription><![CDATA[Muestra la lista de servicios de Apretaste ordenados por categor&iacute;a]]></serviceDescription>
-	<creatorEmail>salvi.pascual@gmail.com</creatorEmail>
+	<serviceDescription>Muestra la lista de servicios de Apretaste ordenados por categoria</serviceDescription>
+	<creatorEmail>salvi@apretaste.com</creatorEmail>
 	<serviceCategory>otros</serviceCategory>
 	<serviceUsage>
 		<![CDATA[

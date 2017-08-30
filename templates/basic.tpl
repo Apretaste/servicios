@@ -13,9 +13,9 @@
 			<td>
 				{$service->description}
 			</td>
-			<td width="100">
-			{if $service->isnew == '1' && $service->name !== 'excluyeme'}
-				{button color="red" href="{$service->name}" caption="NUEVO" size="small"}
+			<td align="center">
+			{if $service->isnew == '1'}
+				{tag caption="NEW" bgcolor="#D9534F"}
 			{/if}
 			</td>
 		</tr>
