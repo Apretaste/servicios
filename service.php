@@ -7,17 +7,16 @@ class Servicios extends Service
 	 *
 	 * @param Request
 	 * @return Response
-	 * */
+	 */
 	public function _main($request)
 	{
 		// get list of services
 		$connection = new Connection();
-		$result = $connection->deepQuery("SELECT name, description, category, ((select count(usage_id) as total FROM utilization WHERE requestor = '{$request->email}' and utilization.service = service.name) < 1) as isnew FROM service WHERE listed = 1");
-
-		$services = array();
-		$others = array(); // to keep the categoty "others" at the end
+		$result = $connection->query("SELECT name, description, category FROM service WHERE listed=1");
 
 		// create array of arrays
+		$services = array();
+		$others = array();
 		foreach($result as $res)
 		{
 			// to keep the categoty "others" at the end
@@ -29,7 +28,7 @@ class Servicios extends Service
 
 			// group all other categories in a big array
 			if( ! isset($services[$res->category])) $services[$res->category] = array();
-			array_push($services[$res->category], $res); 
+			array_push($services[$res->category], $res);
 		}
 
 		// sort by category alphabetically and merge to "other"
@@ -44,11 +43,9 @@ class Servicios extends Service
 
 		// create response
 		$response = new Response();
-		$response->setResponseSubject("Lista de servicios de Apretaste");
+		$response->setResponseSubject("Lista de servicios");
 		$response->createFromTemplate("basic.tpl", $responseContent);
-
-		// return
 		return $response;
 	}
-	
+
 }
