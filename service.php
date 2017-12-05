@@ -14,11 +14,19 @@ class Servicios extends Service
 		$connection = new Connection();
 		$result = $connection->query("SELECT name, description, category FROM service WHERE listed=1");
 
+		// get the path to www
+		$di = \Phalcon\DI\FactoryDefault::getDefault();
+		$wwwroot = $di->get('path')['root'];
+
 		// create array of arrays
 		$services = array();
 		$others = array();
 		foreach($result as $res)
 		{
+			// get the image of the service
+			$res->image = "$wwwroot/services/{$res->name}/{$res->name}.png";
+			if( ! file_exists($res->image)) $res->image = "$wwwroot/public/images/noicon.png";
+
 			// to keep the categoty "others" at the end
 			if($res->category == "otros")
 			{
@@ -36,16 +44,14 @@ class Servicios extends Service
 		$services = array_merge($services, array("otros"=>$others));
 
 		// get variables to send to the template
-		$responseContent = array(
-			"services" => $services,
-			"serviceNum" => count($result)
-		);
+		$template = ($di->get('environment') == "email") ? "email.tpl" : "web.tpl";
+		$responseContent = array("services" => $services, "serviceNum" => count($result));
 
 		// create response
 		$response = new Response();
+		$response->setEmailLayout("email_default.tpl");
 		$response->setResponseSubject("Lista de servicios");
-		$response->createFromTemplate("basic.tpl", $responseContent);
+		$response->createFromTemplate($template, $responseContent);
 		return $response;
 	}
-
 }
