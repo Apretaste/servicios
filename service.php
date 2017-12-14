@@ -12,7 +12,7 @@ class Servicios extends Service
 	{
 		// get list of services
 		$connection = new Connection();
-		$result = $connection->query("SELECT name, description, category FROM service WHERE listed=1");
+		$result = $connection->query("SELECT name, description, category FROM service WHERE listed>0");
 
 		// get the path to www
 		$di = \Phalcon\DI\FactoryDefault::getDefault();
