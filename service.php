@@ -1,6 +1,6 @@
 <?php
 
-class Servicios extends Service
+class Service
 {
 	/**
 	 * Function executed when the service is called
@@ -8,7 +8,7 @@ class Servicios extends Service
 	 * @param Request
 	 * @return Response
 	 */
-	public function _main($request)
+	public function _main($request, $response)
 	{
 		// get list of services
 		$connection = new Connection();
@@ -26,7 +26,7 @@ class Servicios extends Service
 			// get the image of the service
 			$res->image = "$wwwroot/services/{$res->name}/{$res->name}.png";
 			if( ! file_exists($res->image)) $res->image = "$wwwroot/public/images/noicon.png";
-			Utils::parseImgDir($res->image);
+			Utils::parseImgDir($res->image, $request->environment);
 
 			// to keep the categoty "others" at the end
 			if($res->category == "otros")
@@ -44,11 +44,8 @@ class Servicios extends Service
 		ksort($services);
 		$services = array_merge($services, array("otros"=>$others));
 
-		// create response
-		$response = new Response();
-		$response->setEmailLayout("web_default.ejs");
-		$response->setResponseSubject("Lista de servicios");
-		$response->createFromTemplate("web.ejs", ["services" => $services, "serviceNum" => count($result)]);
-		return $response;
+		// set response
+		$response->setLayout("web_default.ejs");
+		$response->setTemplate("web.ejs", ["services" => $services, "serviceNum" => count($result)]);
 	}
 }
