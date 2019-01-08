@@ -1,0 +1,30 @@
+<h1>Escoja un servicio para comenzar</h1>
+
+<% Object.keys(services).forEach(function(key) { %>
+	<h2><%= key.charAt(0).toUpperCase() + key.slice(1) %></big></h2>
+	<div class="row">
+		<% services[key].forEach(function(service){ %>
+			<div class="col l3 m4 s6">
+				<div class="card">
+					<div class="card-image waves-effect waves-block waves-light">
+						<a href="#!" onclick="apretaste.send({'command':'<%= service.name.toUpperCase() %>'});">
+							<img src="{{APP_IMAGE_PATH}}/<%= service.image %>" alt="<%= service.name %>">
+						</a>
+					</div>
+					<div class="card-content">
+						<span class="card-title activator grey-text text-darken-4">
+							<%= service.name.charAt(0).toUpperCase() + service.name.slice(1) %>
+						</span>
+					</div>
+					<div class="card-reveal">
+						<span class="card-title grey-text text-darken-4">
+							<%= service.name.charAt(0).toUpperCase() + service.name.slice(1) %>
+							<i class="material-icons right">close</i>
+						</span>
+						<p><%= service.description %></p>
+					</div>
+				</div>
+			</div>
+		<% }); %>
+	</div>
+<% }); %>

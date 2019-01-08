@@ -1,14 +1,15 @@
 <?php
 
-class Servicios extends Service
+class Service
 {
 	/**
-	 * Function executed when the service is called
+	 * Main function
 	 *
+	 * @author salvipascual
 	 * @param Request
-	 * @return Response
+	 * @param Response
 	 */
-	public function _main($request)
+	public function _main(Request $request, Response $response)
 	{
 		// get list of services
 		$result = Connection::query("SELECT name, description, category FROM service WHERE listed = 1");
@@ -16,15 +17,19 @@ class Servicios extends Service
 		// get the path to www
 		$di = \Phalcon\DI\FactoryDefault::getDefault();
 		$wwwroot = $di->get('path')['root'];
-		$environment = $di->get('environment');
 
 		// create array of arrays
+		$images = [];
 		$services = [];
 		$others = [];
 		foreach($result as $res) {
-			// get the image of the service
-			$res->image = "$wwwroot/services/{$res->name}/{$res->name}.png";
-			if( ! file_exists($res->image)) $res->image = "$wwwroot/public/images/noicon.png";
+			// get the image for the service
+			$imgPath = "$wwwroot/services/{$res->name}/{$res->name}.png";
+			if( ! file_exists($imgPath)) $imgPath = "$wwwroot/public/images/noicon.png";
+			$res->image = basename($imgPath);
+
+			// save image to the images array only once
+			if( ! in_array($imgPath, $images)) $images[] = $imgPath;
 
 			// to keep the categoty "others" at the end
 			if($res->category == "otros") {
@@ -42,14 +47,11 @@ class Servicios extends Service
 		$services = array_merge($services, ["otros"=>$others]);
 
 		// get variables to send to the template
-		$template = $environment=="web" ? "web.tpl" : "email.tpl";
-		$responseContent = ["services" => $services, "serviceNum" => count($result)];
+		$content = new stdClass();
+		$content->services = $services;
+		$content->serviceNum = count($result);
 
 		// create response
-		$response = new Response();
-		$response->setEmailLayout("email_default.tpl");
-		$response->setResponseSubject("Lista de servicios");
-		$response->createFromTemplate($template, $responseContent);
-		return $response;
+		$response->setTemplate("home.ejs", $content, $images);
 	}
 }
