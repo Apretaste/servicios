@@ -1,0 +1,19 @@
+<div class="center-align">
+    <h5>Escoja un servicio para comenzar</h5>
+	<%for (var category in services){%>
+		<%name = category.charAt(0).toUpperCase() + category.slice(1)%>
+        <h5 class="green-text"><b><%=name%></b></h5>
+        <div class="row">
+		<%services[category].forEach((service) => {%>
+		<%service.name = service.name.charAt(0).toUpperCase() + service.name.slice(1)%>
+            <div class="col s4 m2" title="<%=service.description%>">
+                <a href="#" onclick="apretaste.send({command : '<%=service.name%>'})">
+                <img src="{{APP_IMAGE_PATH}}/<%=service.image%>" alt="<%=service.name%>" width="100%">
+                <%=service.name%>
+                </a>
+            </div>
+        <%});%>
+    	</div>
+        <div class="divider"></div>
+    <%};%>
+</div>
