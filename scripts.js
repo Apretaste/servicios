@@ -6,7 +6,7 @@ var service = {
 
 		// check the coupon is not empty
 		if( ! coupon) {
-			M.toast({html: 'El cup&oacute;n no puede estar vac&iacute;o'});
+			M.toast({html: 'El cupón no puede estar vacío'});
 			return false;
 		}
 
