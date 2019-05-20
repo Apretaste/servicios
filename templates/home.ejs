@@ -5,11 +5,11 @@
         <h5 class="green-text"><b><%=name%></b></h5>
         <div class="row">
 		<%services[category].forEach((service) => {%>
-		<%service.name = service.name.charAt(0).toUpperCase() + service.name.slice(1)%>
+		<%service.custom_name = service.custom_name.charAt(0).toUpperCase() + service.custom_name.slice(1)%>
             <div class="col s4 m2" title="<%=service.description%>">
                 <a href="#" onclick="apretaste.send({command : '<%=service.name%>'})">
                 <img src="{{APP_IMAGE_PATH}}/<%=service.image%>" alt="<%=service.name%>" width="100%">
-                <%=service.name%>
+                <%=service.custom_name%>
                 </a>
             </div>
         <%});%>

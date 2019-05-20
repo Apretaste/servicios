@@ -11,6 +11,10 @@ class Service
 	 */
 	public function _main(Request $request, Response $response)
 	{
+		$custom_names = [
+			'web' => 'Web y Google'
+		];
+
 		// get list of services
 		$result = Connection::query("SELECT name, description, category FROM service WHERE listed = 1");
 
@@ -27,6 +31,9 @@ class Service
 			$imgPath = "$wwwroot/services/{$res->name}/{$res->name}.png";
 			if( ! file_exists($imgPath)) $imgPath = "$wwwroot/public/images/noicon.png";
 			$res->image = basename($imgPath);
+
+			$res->custom_name = $res->name;
+			if (isset($custom_names[$res->name])) $res->custom_name = $custom_names[$res->name];
 
 			// save image to the images array only once
 			if( ! in_array($imgPath, $images)) $images[] = $imgPath;
