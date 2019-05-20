@@ -1,6 +1,6 @@
 {
 	"name": "servicios",
-	"version": "1",
+	"version": "2",
 	"description": "Muestra la lista de servicios de Apretaste ordenados por categoria.",
 	"category": "otros",
 	"creator": "salvi@apretaste.org",
