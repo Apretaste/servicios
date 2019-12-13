@@ -17,9 +17,10 @@ class Service
 	{
 		// get list of services
 		$services = Database::query("
-			SELECT name, category 
-			FROM service 
+			SELECT name, category
+			FROM service
 			WHERE listed = 1
+			AND active = 1
 			ORDER BY name ASC");
 
 		// get the image for the service
