@@ -1,5 +1,6 @@
 <?php
 
+use Framework\Core;
 use Apretaste\Request;
 use Apretaste\Response;
 use Framework\Database;
@@ -17,7 +18,7 @@ class Service
 	{
 		// get list of services
 		$services = Database::query("
-			SELECT name, category
+			SELECT name, caption, category
 			FROM service
 			WHERE listed = 1
 			AND active = 1
@@ -27,15 +28,24 @@ class Service
 		$images = [];
 		foreach ($services as $r) {
 			$images[] = SERVICE_PATH . $r->name . "/" . $r->name . ".png";
-			$r->name = ucfirst($r->name);
-			$r->category = ucfirst($r->category);
 		}
 
 		// create the list of categories
 		$categories = [];
 		foreach ($services as $c) {
-			if(!in_array($c->category, $categories)) $categories[] = $c->category;
+			if (isset($categories[$c->category])) {
+				$categories[$c->category]->count++;
+			} else {
+				$category = new \stdClass();
+				$category->code = $c->category;
+				$category->name = Core::$serviceCategories[$c->category];
+				$category->count = 1;
+				$categories[$c->category] = $category;
+			}
 		}
+
+		// sort the categories alphabetically
+		ksort($categories);
 
 		// create the content array
 		$content = [

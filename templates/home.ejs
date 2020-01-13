@@ -1,15 +1,10 @@
 <div class="row">
-	<div class="col s12 center-align">
-		<p>Escoja un servicio para comenzar</p>
-	</div>
-</div>
-
-<div class="row">
 	<div class="col s12 input-field">
 		<select id="filter" onchange="filter(value)">
-			<option value="">Todo</option>
-			<% categories.forEach(function(item){ %>
-				<option value="<%= item %>"><%= item %></option>
+			<option value="" selected>Todo (<%= services.length %>)</option>
+			<% Object.keys(categories).forEach(function(key){ %>
+				<% var item = categories[key] %>
+				<option value="<%= item.code %>"><%= item.name %> (<%= item.count %>)</option>
 			<% }) %>
 		</select>
 	</div>
@@ -20,8 +15,8 @@
 		<div class="col s4 m2 center-align service <%= item.category %>">
 			<div class="card" style="padding:1rem">
 				<a href="#" class="green-text apretaste" onclick="apretaste.send({command:'<%= item.name %>'})">
-					<img src="{{APP_IMAGE_PATH}}<%= item.name.toLowerCase() %>.png" alt="<%= item.name %>" width="100%">
-					<%= item.name %>
+					<img src="{{APP_IMAGE_PATH}}<%= item.name %>.png" alt="<%= item.caption %>" width="100%">
+					<%= item.caption %>
 				</a>
 			</div>
 		</div>
