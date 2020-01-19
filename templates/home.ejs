@@ -1,19 +1,24 @@
-<div class="center-align">
-    <h5>Escoja un servicio para comenzar</h5>
-	<%for (var category in services){%>
-		<%name = category.charAt(0).toUpperCase() + category.slice(1)%>
-        <h5 class="green-text"><b><%=name%></b></h5>
-        <div class="row">
-		<%services[category].forEach((service) => {%>
-		<%service.name = service.name.charAt(0).toUpperCase() + service.name.slice(1)%>
-            <div class="col s4 m2" title="<%=service.description%>">
-                <a href="#" onclick="apretaste.send({command : '<%=service.name%>'})">
-                <img src="{{APP_IMAGE_PATH}}/<%=service.image%>" alt="<%=service.name%>" width="100%">
-                <%=service.name%>
-                </a>
-            </div>
-        <%});%>
-    	</div>
-        <div class="divider"></div>
-    <%};%>
+<div class="row">
+	<div class="col s12 input-field">
+		<select id="filter" onchange="filter(value)">
+			<option value="" selected>Todo (<%= services.length %>)</option>
+			<% Object.keys(categories).forEach(function(key){ %>
+				<% var item = categories[key] %>
+				<option value="<%= item.code %>"><%= item.name %> (<%= item.count %>)</option>
+			<% }) %>
+		</select>
+	</div>
+</div>
+
+<div class="row">
+	<% services.forEach(function(item){ %>
+		<div class="col s4 m2 center-align service <%= item.category %>">
+			<div class="card" style="padding:1rem">
+				<a href="#" class="green-text apretaste" onclick="apretaste.send({command:'<%= item.name %>'})">
+					<img src="{{APP_IMAGE_PATH}}<%= item.name %>.png" alt="<%= item.caption %>" width="100%">
+					<%= item.caption %>
+				</a>
+			</div>
+		</div>
+	<% }) %>
 </div>
