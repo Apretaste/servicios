@@ -1,3 +1,7 @@
 .service .card {
 	padding: 1rem;
 }
+
+.service img {
+	width: 100%;
+}
