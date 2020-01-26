@@ -20,8 +20,7 @@ class Service
 		$services = Database::query("
 			SELECT name, caption, category
 			FROM service
-			WHERE listed = 1
-			AND active = 1
+			WHERE active = 1
 			ORDER BY name ASC");
 
 		// get the image for the service
