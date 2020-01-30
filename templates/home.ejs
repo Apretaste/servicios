@@ -1,17 +1,29 @@
 <div class="row">
 	<div class="col s12 input-field">
-		<select id="filter" onchange="filter(value)">
-			<option value="" selected>Todo (<%= services.length %>)</option>
-			<% Object.keys(categories).forEach(function(key){ %>
-				<% var item = categories[key] %>
-				<option value="<%= item.code %>"><%= item.name %> (<%= item.count %>)</option>
-			<% }) %>
-		</select>
+		<div class="drop-down">
+			<i class="material-icons icon" onclick="options()">arrow_drop_down</i>
+			<input id="filter" type="text" placeholder="Servicio a buscar" onkeyup="filter()" onfocus="clean()">
+			<div class="options">
+				<ul class="z-depth-1">
+					<li value="all" onclick="select(this)">
+						<span class="text">Ver todos</span>
+						<span class="counter"><%= services.length %></span>
+					</li>
+					<% Object.keys(categories).forEach(function(key){ %>
+						<% var item = categories[key] %>
+						<li value="<%= item.code %>" onclick="select(this)">
+							<span class="text"><%= item.name %></span>
+							<span class="counter"><%= item.count %></span>
+						</li>
+					<% }) %>
+				</ul>
+			</div>
+		</div>
 	</div>
 
 	<% services.forEach(function(item){ %>
-		<div class="col s4 m2 center-align service <%= item.category %>">
-			<div class="card">
+		<div class="col s4 m2 center-align service <%= item.category %>" data-value="<%= item.caption %>">
+			<div class="card" >
 				<a href="#!" class="green-text" onclick="apretaste.send({command:'<%= item.name %>'})">
 					<img src="{{APP_IMAGE_PATH}}<%= item.name %>.png" alt="<%= item.caption %>">
 					<%= item.caption %>

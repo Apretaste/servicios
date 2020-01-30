@@ -5,3 +5,45 @@
 .service img {
 	width: 100%;
 }
+
+.drop-down .icon {
+	position: absolute;
+	right: 15px;
+	top: 10px;
+}
+
+.drop-down .options {
+	display: none;
+	position: fixed;
+	z-index: 1;
+}
+
+.drop-down ul {
+	background-color: #fff;
+	overflow-y: auto;
+	width: 100%;
+	position: relative;
+	left: -15px;
+	top: -55px;
+	z-index: 9999;
+	transform-origin: 0 0;
+	margin: 0px 10px;
+	border-radius: 3px;
+}
+
+.drop-down li {
+	cursor: pointer;
+	min-height: 50px;
+	width: 100%;
+	text-align: left;
+	font-size: 16px;
+	color: #57b23b;
+	display: inline-block;
+	line-height: 22px;
+	padding: 14px 16px;
+}
+
+.drop-down li .counter {
+	float: right;
+	color: #212121;
+}
