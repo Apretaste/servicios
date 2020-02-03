@@ -30,11 +30,11 @@ function select(element) {
 
 function filter(element) {
 	// get text to filter by
-	var text = $('#filter').val().toLowerCase();
+	var text = cleanUpSpecialChars($('#filter').val().toLowerCase());
 
 	$('.service').show().each(function(i, e) {
 		// get the caption
-		var caption = $(e).attr('data-value').toLowerCase();
+		var caption = cleanUpSpecialChars($(e).attr('data-value').toLowerCase());
 
 		// hide if caption does not match
 		if(caption.indexOf(text) < 0) {
@@ -45,4 +45,16 @@ function filter(element) {
 
 function clean() {
 	$('#filter').val('');
+}
+
+function cleanUpSpecialChars(str)
+{
+	return str
+		.replace(/Á/g,"A").replace(/a/g,"a")
+		.replace(/É/g,"E").replace(/é/g,"e")
+		.replace(/Í/g,"I").replace(/í/g,"i")
+		.replace(/Ó/g,"O").replace(/ó/g,"o")
+		.replace(/Ú/g,"U").replace(/ú/g,"u")
+		.replace(/Ñ/g,"N").replace(/ñ/g,"n")
+		.replace(/[^a-z0-9]/gi,''); // final clean up
 }
