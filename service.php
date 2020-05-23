@@ -7,26 +7,29 @@ use Framework\Database;
 
 class Service
 {
+
 	/**
 	 * Main function
 	 *
-	 * @param Request
-	 * @param Response
+	 * @param  \Apretaste\Request  $request
+	 * @param  \Apretaste\Response  $response
+	 *
+	 * @throws \Framework\Alert
 	 * @author salvipascual
 	 */
 	public function _main(Request $request, Response $response)
 	{
 		// get list of services
-		$services = Database::query("
+		$services = Database::query('
 			SELECT name, caption, category
 			FROM service
-			WHERE active = 1
-			ORDER BY name ASC");
+			WHERE listed = 1 AND active = 1
+			ORDER BY name ASC');
 
 		// get the image for the service
 		$images = [];
 		foreach ($services as $r) {
-			$images[] = SERVICE_PATH . $r->name . "/" . $r->name . ".png";
+			$images[] = SERVICE_PATH . $r->name.'/'.$r->name.'.png';
 		}
 
 		// create the list of categories
@@ -48,12 +51,12 @@ class Service
 
 		// create the content array
 		$content = [
-			"services" => $services,
-			"categories" => $categories
+			'services' => $services,
+			'categories' => $categories
 		];
 
 		// create response
 		$response->setCache('month');
-		$response->setTemplate("home.ejs", $content, $images);
+		$response->setTemplate('home.ejs', $content, $images);
 	}
 }
