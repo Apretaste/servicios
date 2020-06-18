@@ -1,35 +1,35 @@
 <?php
 
-use Framework\Core;
 use Apretaste\Request;
 use Apretaste\Response;
+use Framework\Core;
 use Framework\Database;
 
 class Service
 {
-
 	/**
 	 * Main function
 	 *
-	 * @param  \Apretaste\Request  $request
-	 * @param  \Apretaste\Response  $response
-	 *
-	 * @throws \Framework\Alert
+	 * @param Request $request
+	 * @param Response $response
+	 * @throws Alert
 	 * @author salvipascual
 	 */
 	public function _main(Request $request, Response $response)
 	{
 		// get list of services
-		$services = Database::query('
-			SELECT name, caption, category
-			FROM service
-			WHERE listed = 1 AND active = 1
-			ORDER BY name ASC');
+		$services = Database::query("
+			SELECT A.name, A.caption, A.category, IFNULL(B.count, 0) AS count
+			FROM service A
+			LEFT JOIN (SELECT * FROM service_alerts WHERE person_id = {$request->person->id}) B
+			ON A.name = B.name
+			WHERE A.listed = 1 AND A.active = 1
+			ORDER BY A.name ASC");
 
 		// get the image for the service
 		$images = [];
 		foreach ($services as $r) {
-			$images[] = SERVICE_PATH . $r->name.'/'.$r->name.'.png';
+			$images[] = SERVICE_PATH . $r->name . '/' . $r->name . '.png';
 		}
 
 		// create the list of categories

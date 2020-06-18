@@ -21,13 +21,16 @@
 		</div>
 	</div>
 
-	<% services.forEach(function(item){ %>
+	<% services.forEach(function(item) { %>
 		<div class="col s4 m2 center-align service <%= item.category %>" data-value="<%= item.caption %>">
-			<div class="card" >
+			<div class="card">
 				<a href="#!" class="green-text" onclick="apretaste.send({command:'<%= item.name %>'})">
+					<% if(item.count > 0) { %>
+						<div class="alert-icon red white-text"><%= item.count %></div>
+					<% } %>
 					<img src="{{APP_IMAGE_PATH}}<%= item.name %>.png" alt="<%= item.caption %>">
-                    <br>
-                    <span style="white-space: nowrap"><%= item.caption %></span>
+					<br>
+					<span style="white-space: nowrap"><%= item.caption %></span>
 				</a>
 			</div>
 		</div>
